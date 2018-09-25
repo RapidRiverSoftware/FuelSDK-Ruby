@@ -1,4 +1,3 @@
-
 # Everything will be readable so test for shared from Read behavior
 shared_examples_for 'Soap Read Object' do
   # begin backwards compat
