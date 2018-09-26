@@ -143,10 +143,9 @@ module MarketingCloudSDK
             f.write(res)
           end
         end
-        @status = response.code
-      else
-        @status = response.code
       end
+
+      @status = response.code
     end
   end
 
@@ -258,7 +257,7 @@ module MarketingCloudSDK
             raise_errors: false,
             log: @debug,
           )
-        rescue Exception => e
+        rescue StandardError => e
           raise 'Unable to validate App Keys(ClientID/ClientSecret) provided: ' + e.message
         end
       end
@@ -514,12 +513,11 @@ module MarketingCloudSDK
             end
 
       if filter
+        obj['Filter'] = filter
         if filter.has_key?('LogicalOperator')
-          obj['Filter'] = filter
           obj[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:ComplexFilterPart' } }
           obj['Filter'][:attributes!] = { 'LeftOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' }, 'RightOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' } }
         else
-          obj['Filter'] = filter
           obj[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:SimpleFilterPart' } }
         end
       end
@@ -751,7 +749,7 @@ module MarketingCloudSDK
         end
       end
 
-      obj = ET_PatchRest.new(@authStub, completeURL, @props)
+      ET_PatchRest.new(@authStub, completeURL, @props)
     end
 
     def delete

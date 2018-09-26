@@ -264,7 +264,7 @@ module MarketingCloudSDK
       originalProp = properties
       cleanProps
       obj = super
-      properties = originalProp
+      self.properties = originalProp
       obj
     end
 
@@ -272,7 +272,7 @@ module MarketingCloudSDK
       originalProp = properties
       cleanProps
       obj = super
-      properties = originalProp
+      self.properties = originalProp
       obj
     end
 
@@ -436,7 +436,7 @@ module MarketingCloudSDK
       include Objects::Soap::CUD
       include Objects::Soap::Upsert
 
-      attr_accessor :name, :customer_key
+      attr_writer :name, :customer_key
 
       # backward compatibility
       alias Name= name=
@@ -594,9 +594,9 @@ module MarketingCloudSDK
 
       if d.is_a? Array
         d.each do |de|
-          if (explicit_fields(de) && (de['columns'] || de['fields'] || has_fields)) ||
-              (de['columns'] && (de['fields'] || has_fields)) ||
-              (de['fields'] && has_fields)
+          if (explicit_fields(de) && (de['columns'] || de['fields'] || has_fields?)) ||
+              (de['columns'] && (de['fields'] || has_fields?)) ||
+              (de['fields'] && has_fields?)
             raise 'Fields are defined in too many ways. Please only define once.' # ahhh what, to do...
           end
 
@@ -621,7 +621,7 @@ module MarketingCloudSDK
       h['Fields'] && h['Fields']['Field']
     end
 
-    def has_fields
+    def has_fields?
       fields && !fields.empty?
     end
   end

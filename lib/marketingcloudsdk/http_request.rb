@@ -65,16 +65,16 @@ module MarketingCloudSDK
       @code = raw.code.to_i
       @message = raw.message
       @body = begin
-                  JSON.parse(raw.body)
-                rescue StandardError
-                  {}
-                end
+                JSON.parse(raw.body)
+              rescue StandardError
+                {}
+              end
       @results = @body
       @more = begin
-                  ((@results['count'] || @results['totalCount']) > @results['page'] * @results['pageSize'])
-                rescue StandardError
-                  false
-                end
+                ((@results['count'] || @results['totalCount']) > @results['page'] * @results['pageSize'])
+              rescue StandardError
+                false
+              end
       @success = @message == 'OK'
     end
 

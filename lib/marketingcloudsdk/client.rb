@@ -91,7 +91,7 @@ module MarketingCloudSDK
       self.refresh_token = decoded_jwt['request']['user']['refreshToken']
       self.auth_token_expiration = Time.new + decoded_jwt['request']['user']['expiresIn']
       self.package_name = decoded_jwt['request']['application']['package']
-     end
+    end
 
     def initialize(params = {}, debug = false)
       @refresh_mutex = Mutex.new
@@ -108,7 +108,7 @@ module MarketingCloudSDK
       self.refresh_token = params['refresh_token'] if params['refresh_token']
 
       self.wsdl = params['defaultwsdl'] if params['defaultwsdl']
-     end
+    end
 
     def refresh(force = false)
       @refresh_mutex.synchronize do
@@ -140,11 +140,11 @@ module MarketingCloudSDK
           return false
         end
       end
-     end
+    end
 
     def refresh!
       refresh true
-     end
+    end
 
     def AddSubscriberToList(email, ids, subscriber_key = nil)
       s = MarketingCloudSDK::Subscriber.new
@@ -160,14 +160,14 @@ module MarketingCloudSDK
         rsp = s.patch
       end
       rsp
-     end
+    end
 
     def CreateDataExtensions(definitions)
       de = MarketingCloudSDK::DataExtension.new
       de.client = self
       de.properties = definitions
       de.post
-     end
+    end
 
     def SendTriggeredSends(arrayOfTriggeredRecords)
       sendTS = ET_TriggeredSend.new
@@ -177,7 +177,7 @@ module MarketingCloudSDK
       sendResponse = sendTS.send
 
       sendResponse
-     end
+    end
 
     def SendEmailToList(emailID, listID, sendClassificationCustomerKey)
       email = ET_Email::SendDefinition.new
@@ -190,7 +190,7 @@ module MarketingCloudSDK
       if result.status
         sendresult = email.send
         if sendresult.status
-          deleteresult = email.delete
+          email.delete
           return sendresult
         else
           raise "Unable to send using send definition due to: #{result.results[0][:status_message]}"
@@ -198,7 +198,7 @@ module MarketingCloudSDK
       else
         raise "Unable to create send definition due to: #{result.results[0][:status_message]}"
       end
-     end
+    end
 
     def SendEmailToDataExtension(emailID, sendableDataExtensionCustomerKey, sendClassificationCustomerKey)
       email = ET_Email::SendDefinition.new
@@ -211,7 +211,7 @@ module MarketingCloudSDK
       if result.status
         sendresult = email.send
         if sendresult.status
-          deleteresult = email.delete
+          email.delete
           return sendresult
         else
           raise "Unable to send using send definition due to: #{result.results[0][:status_message]}"
@@ -219,7 +219,7 @@ module MarketingCloudSDK
       else
         raise "Unable to create send definition due to: #{result.results[0][:status_message]}"
       end
-     end
+    end
 
     def CreateAndStartListImport(listId, fileName)
       import = ET_Import.new
@@ -241,7 +241,7 @@ module MarketingCloudSDK
       else
         raise "Unable to create import definition due to: #{result.results[0][:status_message]}"
       end
-     end
+    end
 
     def CreateAndStartDataExtensionImport(dataExtensionCustomerKey, fileName, overwrite)
       import = ET_Import.new
@@ -267,14 +267,14 @@ module MarketingCloudSDK
       else
         raise "Unable to create import definition due to: #{result.results[0][:status_message]}"
       end
-     end
+    end
 
     def CreateProfileAttributes(allAttributes)
       attrs = ET_ProfileAttribute.new
       attrs.authStub = self
       attrs.properties = allAttributes
       attrs.post
-     end
+    end
 
     def CreateContentAreas(arrayOfContentAreas)
       postC = ET_ContentArea.new
@@ -282,6 +282,6 @@ module MarketingCloudSDK
       postC.properties = arrayOfContentAreas
       sendResponse = postC.post
       sendResponse
-     end
+    end
   end
 end

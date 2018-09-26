@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.3
   Exclude:
@@ -206,6 +208,7 @@ Metrics/LineLength:
   Description: 'Limit lines to 120 characters.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
   Max: 120
+  Enabled: false
 
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'

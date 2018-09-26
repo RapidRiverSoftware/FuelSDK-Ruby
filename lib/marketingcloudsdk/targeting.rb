@@ -32,26 +32,27 @@
 #
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-module MarketingCloudSDK::Targeting
-  attr_accessor :access_token
-  attr_reader :endpoint
+module MarketingCloudSDK
+  module Targeting
+    attr_accessor :access_token
 
-  include MarketingCloudSDK::HTTPRequest
+    include MarketingCloudSDK::HTTPRequest
 
-  def endpoint
-    unless @endpoint
-      determine_stack
+    def endpoint
+      unless @endpoint
+        determine_stack
+      end
+      @endpoint
     end
-    @endpoint
-  end
 
-  protected
+    protected
 
-  def determine_stack
-    options = { 'params' => { 'access_token' => access_token } }
-    response = get('https://www.exacttargetapis.com/platform/v1/endpoints/soap', options)
-    @endpoint = response['url']
-  rescue StandardError => e
-    raise 'Unable to determine stack using: ' + e.message
+    def determine_stack
+      options = { 'params' => { 'access_token' => access_token } }
+      response = get('https://www.exacttargetapis.com/platform/v1/endpoints/soap', options)
+      @endpoint = response['url']
+    rescue StandardError => e
+      raise 'Unable to determine stack using: ' + e.message
+    end
   end
 end

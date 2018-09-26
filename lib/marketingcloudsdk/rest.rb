@@ -84,7 +84,7 @@ module MarketingCloudSDK
     end
 
     def rest_delete(url, properties = {})
-      url, properties = parse_properties url, properties
+      url, _properties = parse_properties url, properties
       rest_request :delete, url
     end
 

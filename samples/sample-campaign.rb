@@ -176,7 +176,7 @@ begin
   p '-----------------------------'
 
   raise 'Failure retrieving campaign asset' unless getResponse.success?
-  raise 'Failure retrieving campaign asset' unless getResponse.results['totalCount'] == 0
+  raise 'Failure retrieving campaign asset' unless getResponse.results['totalCount'].zero?
 rescue StandardError => e
   p "Caught exception: #{e.message}"
   p e.backtrace
