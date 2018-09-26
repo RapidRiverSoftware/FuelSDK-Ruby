@@ -99,9 +99,7 @@ describe MarketingCloudSDK::Client do
       }
     end
 
-    let(:sig) do
-      sig = 'hanckock'
-    end
+    let(:sig) { 'hanckock' }
 
     let(:encoded) do
       JWT.encode(payload, sig)
@@ -112,14 +110,6 @@ describe MarketingCloudSDK::Client do
     end
 
     describe 'decodes JWT' do
-      let(:sig) do
-        sig = 'hanckock'
-      end
-
-      let(:encoded) do
-        JWT.encode(payload, sig)
-      end
-
       let(:client) do
         MarketingCloudSDK::Client.new 'client' => { 'id' => '1234', 'secret' => 'ssssh', 'signature' => sig }
       end
